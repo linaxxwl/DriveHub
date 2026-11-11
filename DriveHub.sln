@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveHub", "DriveHub.Web\DriveHub.csproj", "{F98CBAAB-C65F-4CA5-8C4C-F34C5F471335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriveHub.Tests", "DriveHub.Tests\DriveHub.Tests.csproj", "{F06050B0-0CE8-4C42-8825-0EF4BD89E93D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F98CBAAB-C65F-4CA5-8C4C-F34C5F471335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F98CBAAB-C65F-4CA5-8C4C-F34C5F471335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F98CBAAB-C65F-4CA5-8C4C-F34C5F471335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F98CBAAB-C65F-4CA5-8C4C-F34C5F471335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06050B0-0CE8-4C42-8825-0EF4BD89E93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06050B0-0CE8-4C42-8825-0EF4BD89E93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06050B0-0CE8-4C42-8825-0EF4BD89E93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06050B0-0CE8-4C42-8825-0EF4BD89E93D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C008571-55E6-4872-A182-9FB1A2298398}
+	EndGlobalSection
+EndGlobal
