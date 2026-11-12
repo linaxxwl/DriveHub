@@ -26,6 +26,10 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Ключи, имена которых EF Core не определяет автоматически
+        modelBuilder.Entity<ActionLog>().HasKey(a => a.LogId);
+        modelBuilder.Entity<CarModel>().HasKey(m => m.ModelId);
+
         // Составной ключ избранного: клиент + автомобиль
         modelBuilder.Entity<Favorite>()
             .HasKey(f => new { f.ClientId, f.CarId });
