@@ -1,22 +1,206 @@
+:root {
+    --dh-ink: #0A1424; /* самый тёмный */
+    --dh-navy: #1F3A5A;
+    --dh-steel: #4E7396;
+    --dh-sky: #8FB1CC;
+    --dh-mist: #C9DCE9; /* самый светлый */
+    --dh-bg: #F3F7FA;
+    --dh-radius: 16px;
+}
+
 html {
-  font-size: 14px;
+    font-size: 15px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--dh-bg);
+    color: var(--dh-ink);
+    margin-bottom: 0;
+}
+
+/* Меню */
+.dh-nav {
+    background: var(--dh-ink);
+    padding: .75rem 0;
+}
+
+.dh-brand {
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: #fff !important;
+    letter-spacing: .3px;
+}
+
+    .dh-brand span {
+        color: var(--dh-sky);
+    }
+
+.dh-nav .nav-link {
+    color: var(--dh-mist);
+    font-weight: 500;
+}
+
+    .dh-nav .nav-link:hover {
+        color: #fff;
+    }
+
+.dh-nav .btn-link {
+    text-decoration: none;
+}
+
+/* Кнопки */
+.btn-primary {
+    --bs-btn-bg: var(--dh-navy);
+    --bs-btn-border-color: var(--dh-navy);
+    --bs-btn-hover-bg: var(--dh-ink);
+    --bs-btn-hover-border-color: var(--dh-ink);
+    --bs-btn-active-bg: var(--dh-ink);
+    --bs-btn-active-border-color: var(--dh-ink);
+    border-radius: 999px;
+    padding: .55rem 1.4rem;
+    font-weight: 600;
+}
+
+.btn-light-dh {
+    background: var(--dh-mist);
+    color: var(--dh-ink);
+    border-radius: 999px;
+    padding: .5rem 1.3rem;
+    font-weight: 600;
+    border: 0;
+}
+
+    .btn-light-dh:hover {
+        background: #fff;
+        color: var(--dh-ink);
+    }
+
+/* Поля форм */
+.form-control, .form-select {
+    border-radius: 12px;
+    border-color: var(--dh-mist);
+    padding: .6rem .9rem;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--dh-steel);
+        box-shadow: 0 0 0 .2rem rgba(78, 115, 150, .25);
+    }
+
+/* Главный блок */
+.dh-hero {
+    background: radial-gradient(600px 300px at 85% 10%, rgba(143, 177, 204, .35), transparent 70%), linear-gradient(135deg, var(--dh-ink) 0%, var(--dh-navy) 100%);
+    color: #fff;
+    border-radius: 28px;
+    padding: 4.5rem 3rem;
+    margin-top: 1.5rem;
+}
+
+    .dh-hero h1 {
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1.1;
+        max-width: 16ch;
+    }
+
+    .dh-hero p {
+        color: var(--dh-mist);
+        max-width: 46ch;
+        font-size: 1.1rem;
+        margin: 1.2rem 0 2rem;
+    }
+
+/* Панель поиска */
+.dh-search {
+    background: #fff;
+    border-radius: var(--dh-radius);
+    padding: 1.25rem;
+    margin-top: -2rem;
+    position: relative;
+    box-shadow: 0 12px 32px rgba(10, 20, 36, .12);
+}
+
+/* Заголовки секций */
+.dh-section {
+    margin: 4rem 0 1.5rem;
+    font-weight: 700;
+}
+
+/* Карточки автомобилей */
+.dh-card {
+    background: #fff;
+    border-radius: var(--dh-radius);
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 4px 16px rgba(10, 20, 36, .06);
+    transition: transform .2s, box-shadow .2s;
+}
+
+    .dh-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(10, 20, 36, .14);
+    }
+
+.dh-photo {
+    height: 190px;
+    background: linear-gradient(135deg, var(--dh-mist), var(--dh-sky));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dh-navy);
+    font-weight: 600;
+}
+
+.dh-card-body {
+    padding: 1.25rem;
+}
+
+.dh-specs {
+    color: var(--dh-steel);
+    font-size: .92rem;
+}
+
+.dh-price {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--dh-navy);
+}
+
+/* Как это работает */
+.dh-step {
+    background: #fff;
+    border-radius: var(--dh-radius);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.dh-step-num {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--dh-navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Подвал */
+.dh-footer {
+    background: var(--dh-ink);
+    color: var(--dh-sky);
+    padding: 1.75rem 0;
+    margin-top: 5rem;
+    font-size: .92rem;
 }

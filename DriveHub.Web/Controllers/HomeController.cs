@@ -4,8 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DriveHub.Web.Controllers
 {
+    /// <summary>Страница «О проекте» с темой работы и исполнителем.</summary>
     public class HomeController : Controller
     {
+
+        public IActionResult About() => View();
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)

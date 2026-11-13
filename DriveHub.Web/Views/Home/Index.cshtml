@@ -1,8 +1,46 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Главная";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<section class="dh-hero">
+    <h1>Найдите свой автомобиль</h1>
+    <p>Каталог новых и подержанных автомобилей, заявки на тест-драйв и покупку онлайн.</p>
+    <a class="btn btn-light-dh btn-lg" href="#catalog">Смотреть каталог</a>
+</section>
+
+<!-- Панель поиска (пока без логики, оживим на этапе каталога) -->
+<section class="dh-search">
+    <div class="row g-3">
+        <div class="col-md-3"><select class="form-select"><option>Марка</option></select></div>
+        <div class="col-md-3"><select class="form-select"><option>Цена до</option></select></div>
+        <div class="col-md-3"><select class="form-select"><option>Год от</option></select></div>
+        <div class="col-md-3 d-grid"><button class="btn btn-primary" type="button">Найти</button></div>
+    </div>
+</section>
+
+<h2 class="dh-section" id="catalog">Новые поступления</h2>
+<div class="row g-4">
+    @for (int i = 1; i <= 3; i++)
+    {
+        <div class="col-md-4">
+            <div class="dh-card">
+                <div class="dh-photo">Фото</div>
+                <div class="dh-card-body">
+                    <h5 class="mb-1">Марка Модель</h5>
+                    <div class="dh-specs mb-3">Год · Пробег · Коробка</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="dh-price">[Цена] ₽</span>
+                        <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<h2 class="dh-section">Как это работает</h2>
+<div class="row g-4">
+    <div class="col-md-4"><div class="dh-step"><div class="dh-step-num">1</div><h5>Выберите автомобиль</h5><p class="dh-specs mb-0">Используйте фильтры по марке, цене и году.</p></div></div>
+    <div class="col-md-4"><div class="dh-step"><div class="dh-step-num">2</div><h5>Оставьте заявку</h5><p class="dh-specs mb-0">Запишитесь на тест-драйв или подайте заявку на покупку.</p></div></div>
+    <div class="col-md-4"><div class="dh-step"><div class="dh-step-num">3</div><h5>Оформите сделку</h5><p class="dh-specs mb-0">Менеджер одобрит заявку и подготовит договор.</p></div></div>
 </div>
