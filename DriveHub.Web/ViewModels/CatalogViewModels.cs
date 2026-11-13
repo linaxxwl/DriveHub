@@ -42,3 +42,13 @@ public class CatalogViewModel
     /// <summary>Всего найдено автомобилей.</summary>
     public int Total { get; set; }
 }
+
+/// <summary>Данные для главной страницы: последние поступления и марки для быстрого поиска.</summary>
+public class HomeViewModel
+{
+    /// <summary>Последние добавленные автомобили.</summary>
+    public List<Car> Latest { get; set; } = new();
+
+    /// <summary>Марки для выпадающего списка быстрого поиска.</summary>
+    public List<Brand> Brands { get; set; } = new();
+}

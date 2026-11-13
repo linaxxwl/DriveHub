@@ -68,4 +68,18 @@ public class CatalogService
         _db.Cars
             .Include(c => c.Model).ThenInclude(m => m!.Brand)
             .FirstOrDefaultAsync(c => c.CarId == id);
+
+    /// <summary>Возвращает последние поступившие автомобили для главной страницы.</summary>
+    /// <param name="count">Сколько автомобилей вернуть.</param>
+    public Task<List<Car>> GetLatestAsync(int count) =>
+        _db.Cars
+            .Include(c => c.Model).ThenInclude(m => m!.Brand)
+            .Where(c => c.Status == CarStatus.InStock)
+            .OrderByDescending(c => c.ArrivalDate)
+            .Take(count)
+            .ToListAsync();
+
+    /// <summary>Возвращает все марки по алфавиту.</summary>
+    public Task<List<Brand>> GetBrandsAsync() =>
+        _db.Brands.OrderBy(b => b.Name).ToListAsync();
 }
