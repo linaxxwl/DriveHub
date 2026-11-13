@@ -1,39 +1,49 @@
 using DriveHub.Web.Data;
+using DriveHub.Web.Services;
 using DriveHub.Web.Services.Facades;
-using DriveHub.Web.Services.Reports;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using DriveHub.Web.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ЛОГИРОВАНИЕ: пишем логи в папку logs
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/drivehub-.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 builder.Host.UseSerilog();
 
-// База данных
+// БАЗА ДАННЫХ: SQL Server (строка подключения в appsettings.json)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Сервисы приложения
+// СЕРВИСЫ ПРИЛОЖЕНИЯ (внедрение зависимостей)
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<IDealFacade, DealFacade>();
+
+// АУТЕНТИФИКАЦИЯ: вход через cookie
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/Account/Login";
+        o.AccessDeniedPath = "/Account/Login";
+    });
 
 // MVC
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IReportExporter, CsvReportExporter>();
-builder.Services.AddScoped<IReportExporter, ExcelReportAdapter>();
-
-builder.Services.AddScoped<AccountService>();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(o => { o.LoginPath = "/Account/Login"; o.AccessDeniedPath = "/Account/Login"; });
-
 var app = builder.Build();
 
+// ПРИ СТАРТЕ: применяем миграции и добавляем начальные данные
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    await DbSeeder.SeedAsync(db);
+}
+
+// ОБРАБОТКА ЗАПРОСОВ
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -45,9 +55,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
-
-app.UseAuthorization();
+app.UseAuthentication(); // кто ты?
+app.UseAuthorization();  // что тебе можно?
 
 app.MapControllerRoute(
     name: "default",

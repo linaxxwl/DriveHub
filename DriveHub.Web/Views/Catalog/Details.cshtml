@@ -1,0 +1,54 @@
+﻿@model DriveHub.Web.Domain.Entities.Car
+@{
+    ViewData["Title"] = Model.Model!.Brand!.Name + " " + Model.Model.Name;
+    bool available = Model.Status == DriveHub.Web.Domain.Enums.CarStatus.InStock;
+}
+
+<a asp-action="Index" class="d-inline-block mt-4 mb-2">← Назад в каталог</a>
+
+<div class="row g-4">
+    <!-- ЛЕВАЯ ЧАСТЬ: фото -->
+    <div class="col-lg-6">
+        @if (!string.IsNullOrEmpty(Model.PhotoPath))
+        {
+            <img src="@Model.PhotoPath" alt="Фото автомобиля" class="dh-photo-img" style="border-radius:16px" />
+        }
+        else
+        {
+            <div class="dh-photo" style="height:340px;border-radius:16px">Фото</div>
+        }
+    </div>
+
+    <!-- ПРАВАЯ ЧАСТЬ: информация и кнопки -->
+    <div class="col-lg-6">
+        <h1 class="mb-1">@Model.Model!.Brand!.Name @Model.Model.Name</h1>
+        <div class="dh-specs mb-3">@Model.ManufactureYear · @(Model.Condition == DriveHub.Web.Domain.Enums.CarCondition.New ? "Новый" : "С пробегом")</div>
+
+        <div class="dh-price mb-3" style="font-size:2rem">@Model.Price.ToString("N0") ₽</div>
+
+        @if (!available)
+        {
+            <span class="dh-badge mb-3 d-inline-block">Зарезервирован</span>
+        }
+
+        <div class="dh-step mb-3">
+            <table class="table table-borderless mb-0">
+                <tr><td class="dh-specs">Кузов</td><td>@Model.Model.BodyType</td></tr>
+                <tr><td class="dh-specs">Цвет</td><td>@Model.Color</td></tr>
+                <tr><td class="dh-specs">Пробег</td><td>@Model.Mileage.ToString("N0") км</td></tr>
+                <tr><td class="dh-specs">Двигатель</td><td>@Model.EngineType, @Model.EngineVolume л</td></tr>
+                <tr><td class="dh-specs">Коробка</td><td>@Model.Transmission</td></tr>
+                <tr><td class="dh-specs">Привод</td><td>@Model.DriveType</td></tr>
+                <tr><td class="dh-specs">VIN</td><td>@Model.Vin</td></tr>
+            </table>
+        </div>
+
+        <p>@Model.Description</p>
+
+        <!-- Кнопки -->
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="button" disabled="@(!available)">Оставить заявку</button>
+            <button class="btn btn-light-dh" type="button">В избранное</button>
+        </div>
+    </div>
+</div>
