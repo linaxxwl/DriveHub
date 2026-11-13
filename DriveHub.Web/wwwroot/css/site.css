@@ -204,3 +204,75 @@ body {
     margin-top: 5rem;
     font-size: .92rem;
 }
+
+/* Страницы входа и регистрации */
+.dh-auth {
+    min-height: calc(100vh - 230px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.dh-auth-card {
+    width: 100%;
+    max-width: 460px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 2.5rem 2.25rem;
+    box-shadow: 0 20px 48px rgba(10, 20, 36, .12);
+}
+
+    .dh-auth-card h1 {
+        font-weight: 700;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: .4rem;
+    }
+
+.dh-auth-sub {
+    text-align: center;
+    color: var(--dh-steel);
+    margin-bottom: 1.75rem;
+}
+
+.dh-auth-card .btn-primary {
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.dh-auth-foot {
+    text-align: center;
+    margin-top: 1.25rem;
+    color: var(--dh-steel);
+}
+
+    .dh-auth-foot a {
+        color: var(--dh-navy);
+        font-weight: 600;
+    }
+
+.dh-pass {
+    position: relative;
+}
+
+    .dh-pass .form-control {
+        padding-right: 6.5rem;
+    }
+
+.dh-pass-toggle {
+    position: absolute;
+    right: .5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: var(--dh-steel);
+    font-weight: 600;
+    font-size: .9rem;
+    padding: .4rem .6rem;
+}
+
+    .dh-pass-toggle:hover {
+        color: var(--dh-ink);
+    }

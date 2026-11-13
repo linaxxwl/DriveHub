@@ -14,11 +14,11 @@ public class RegisterViewModel
     public string Email { get; set; } = "";
 
     [Required(ErrorMessage = "Введите телефон")]
-    [RegularExpression(@"^\+?[0-9\s\-()]{10,18}$", ErrorMessage = "Неверный формат телефона")]
+    [RegularExpression(@"^(\+7|8)\d{10}$", ErrorMessage = "Телефон: +79991234567 или 89991234567")]
     public string Phone { get; set; } = "";
 
     [Required(ErrorMessage = "Введите пароль")]
-    [MinLength(6, ErrorMessage = "Минимум 6 символов")]
+    [StringLength(64, MinimumLength = 6, ErrorMessage = "Пароль от 6 до 64 символов")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = "";
 

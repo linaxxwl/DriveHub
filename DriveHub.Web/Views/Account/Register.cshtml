@@ -1,0 +1,50 @@
+﻿@model DriveHub.Web.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="dh-auth">
+    <div class="dh-auth-card">
+        <h1>Регистрация</h1>
+        <p class="dh-auth-sub">Создайте аккаунт, чтобы подавать заявки</p>
+        <form asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label">ФИО</label>
+                <input asp-for="FullName" class="form-control" autocomplete="name" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">E-mail</label>
+                <input asp-for="Email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label">Телефон</label>
+                <input asp-for="Phone" type="tel" class="form-control" data-phone maxlength="12" placeholder="+79991234567" autocomplete="tel" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Пароль</label>
+                <div class="dh-pass">
+                    <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                    <button type="button" class="dh-pass-toggle" data-toggle-pass>Показать</button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label">Повторите пароль</label>
+                <div class="dh-pass">
+                    <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+                    <button type="button" class="dh-pass-toggle" data-toggle-pass>Показать</button>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+        <div class="dh-auth-foot">Уже есть аккаунт? <a asp-action="Login">Войти</a></div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

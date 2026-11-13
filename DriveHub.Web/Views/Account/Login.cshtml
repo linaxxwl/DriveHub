@@ -1,0 +1,32 @@
+﻿@model DriveHub.Web.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="dh-auth">
+    <div class="dh-auth-card">
+        <h1>Вход</h1>
+        <p class="dh-auth-sub">Войдите в свой аккаунт DriveHub</p>
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">E-mail</label>
+                <input asp-for="Email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Пароль</label>
+                <div class="dh-pass">
+                    <input asp-for="Password" class="form-control" autocomplete="current-password" />
+                    <button type="button" class="dh-pass-toggle" data-toggle-pass>Показать</button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary">Войти</button>
+        </form>
+        <div class="dh-auth-foot">Нет аккаунта? <a asp-action="Register">Зарегистрироваться</a></div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
