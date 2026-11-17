@@ -46,14 +46,16 @@
 
         <p>@Model.Description</p>
 
-        <div class="d-flex gap-2">
-            <!-- Заявки сделаю позже -->
-            <button class="btn btn-primary" type="button" disabled="@(!available)">Оставить заявку</button>
-
+        <div class="d-flex flex-wrap gap-2">
             @if (User.IsInRole("Клиент"))
             {
+                @if (available)
+                {
+                    <a asp-controller="Requests" asp-action="Create" asp-route-carId="@Model.CarId" asp-route-type="Purchase" class="btn btn-primary">Оставить заявку</a>
+                    <a asp-controller="Requests" asp-action="Create" asp-route-carId="@Model.CarId" asp-route-type="TestDrive" class="btn btn-light-dh">Тест-драйв</a>
+                }
+
                 bool isFav = ViewBag.IsFavorite == true;
-                <!-- Форма отправляет POST в FavoritesController.Toggle; returnUrl возвращает на эту же страницу -->
                 <form asp-controller="Favorites" asp-action="Toggle" method="post">
                     <input type="hidden" name="carId" value="@Model.CarId" />
                     <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
@@ -62,7 +64,8 @@
             }
             else if (User.Identity?.IsAuthenticated != true)
             {
-                <!-- Гость: ведем на страницу входа -->
+                <!-- Гость: все кнопки ведут на страницу входа -->
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Оставить заявку</a>
                 <a asp-controller="Account" asp-action="Login" class="btn btn-light-dh">В избранное</a>
             }
         </div>
