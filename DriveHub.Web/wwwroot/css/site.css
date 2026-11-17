@@ -10,8 +10,7 @@
 
 html {
     font-size: 15px;
-    position: relative;
-    min-height: 100%;
+    height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -25,6 +24,16 @@ body {
     background: var(--dh-bg);
     color: var(--dh-ink);
     margin-bottom: 0;
+    /* Страница = колонка на всю высоту окна: меню, основная часть, подвал */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Основная часть растягивается и прижимает подвал к низу */
+main {
+    flex: 1 0 auto;
+    width: 100%;
 }
 
 /* Меню */
@@ -196,18 +205,19 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Подвал */
+/* Подвал: margin-top: auto прижимает его вниз, flex-shrink: 0 не дает сжиматься */
 .dh-footer {
     background: var(--dh-ink);
     color: var(--dh-sky);
     padding: 1.75rem 0;
-    margin-top: 5rem;
+    margin-top: 3rem;
     font-size: .92rem;
+    flex-shrink: 0;
 }
 
 /* Страницы входа и регистрации */
 .dh-auth {
-    min-height: calc(100vh - 230px);
+    min-height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
