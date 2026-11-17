@@ -46,10 +46,26 @@
 
         <p>@Model.Description</p>
 
-        <!-- Кнопки -->
         <div class="d-flex gap-2">
+            <!-- Заявки сделаю позже -->
             <button class="btn btn-primary" type="button" disabled="@(!available)">Оставить заявку</button>
-            <button class="btn btn-light-dh" type="button">В избранное</button>
+
+            @if (User.IsInRole("Клиент"))
+            {
+                bool isFav = ViewBag.IsFavorite == true;
+                <!-- Форма отправляет POST в FavoritesController.Toggle; returnUrl возвращает на эту же страницу -->
+                <form asp-controller="Favorites" asp-action="Toggle" method="post">
+                    <input type="hidden" name="carId" value="@Model.CarId" />
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                    <button class="btn btn-light-dh" type="submit">@(isFav ? "Убрать из избранного" : "В избранное")</button>
+                </form>
+            }
+            else if (User.Identity?.IsAuthenticated != true)
+            {
+                <!-- Гость: ведем на страницу входа -->
+                <a asp-controller="Account" asp-action="Login" class="btn btn-light-dh">В избранное</a>
+            }
+        </div>
         </div>
     </div>
 </div>
