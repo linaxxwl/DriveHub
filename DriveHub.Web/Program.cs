@@ -21,6 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<IDealFacade, DealFacade>();
+builder.Services.AddScoped<FavoritesService>();
 
 // ÀÓÒÅÍÒÈÔÈÊÀÖÈß: âõîä ÷åğåç cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

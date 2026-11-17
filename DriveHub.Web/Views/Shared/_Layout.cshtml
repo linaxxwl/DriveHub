@@ -25,6 +25,11 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Главная</a></li>
                         <a class="nav-link" asp-controller="Catalog" asp-action="Index">Каталог</a>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">О проекте</a></li>
+
+                        @if (User.IsInRole("Клиент"))
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-controller="Favorites" asp-action="Index">Избранное</a></li>
+                        }
                     </ul>
                     <ul class="navbar-nav align-items-lg-center gap-lg-2">
                         @if (User.Identity?.IsAuthenticated == true)
