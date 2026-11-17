@@ -1,0 +1,49 @@
+﻿@model DriveHub.Web.ViewModels.CreateRequestViewModel
+@{
+    bool isTestDrive = Model.Type == DriveHub.Web.Domain.Enums.RequestType.TestDrive;
+    ViewData["Title"] = isTestDrive ? "Запись на тест-драйв" : "Заявка на покупку";
+}
+
+<div class="dh-auth">
+    <div class="dh-auth-card">
+        <h1>@(isTestDrive ? "Тест-драйв" : "Заявка на покупку")</h1>
+        <p class="dh-auth-sub">@Model.CarName</p>
+
+        <form asp-action="Create" method="post">
+            <!-- Общие ошибки (например, «Это время уже занято») -->
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+            <input type="hidden" asp-for="CarId" />
+            <input type="hidden" asp-for="Type" />
+
+            <div class="mb-3">
+                <label asp-for="DesiredDate" class="form-label">@(isTestDrive ? "Дата тест-драйва" : "Желаемая дата визита")</label>
+                <input asp-for="DesiredDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DesiredDate" class="text-danger"></span>
+            </div>
+
+            @if (isTestDrive)
+            {
+                <!-- Время нужно только для тест-драйва; салон работает с 9:00 до 20:00 -->
+                <div class="mb-3">
+                    <label class="form-label">Время (с 9:00 до 20:00)</label>
+                    <input type="time" name="TestDriveTime" class="form-control" min="09:00" max="20:00" step="900"
+                           value="@(Model.TestDriveTime?.ToString(@"hh\:mm"))" />
+                    <span asp-validation-for="TestDriveTime" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="mb-3">
+                <label asp-for="ClientComment" class="form-label">Комментарий (необязательно)</label>
+                <textarea asp-for="ClientComment" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="ClientComment" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary">Отправить заявку</button>
+        </form>
+        <div class="dh-auth-foot"><a asp-controller="Catalog" asp-action="Details" asp-route-id="@Model.CarId">← Назад к автомобилю</a></div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
