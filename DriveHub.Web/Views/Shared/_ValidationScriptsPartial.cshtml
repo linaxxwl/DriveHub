@@ -1,2 +1,22 @@
 ﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<!-- Русские тексты стандартных сообщений проверки форм -->
+<script>
+    $.extend($.validator.messages, {
+        required: "Заполните это поле",
+        email: "Введите корректный e-mail",
+        url: "Введите корректный адрес",
+        date: "Введите корректную дату",
+        number: "Введите число",
+        digits: "Введите только цифры",
+        equalTo: "Значения не совпадают",
+        maxlength: $.validator.format("Не более {0} символов"),
+        minlength: $.validator.format("Не менее {0} символов"),
+        rangelength: $.validator.format("Длина должна быть от {0} до {1} символов"),
+        range: $.validator.format("Введите значение от {0} до {1}"),
+        max: $.validator.format("Значение не должно превышать {0}"),
+        min: $.validator.format("Значение не должно быть меньше {0}"),
+        step: $.validator.format("Введите значение, кратное {0}")
+    });
+</script>
