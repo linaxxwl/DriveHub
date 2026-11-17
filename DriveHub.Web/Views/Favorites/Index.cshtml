@@ -1,0 +1,48 @@
+﻿@model List<DriveHub.Web.Domain.Entities.Car>
+@{
+    ViewData["Title"] = "Избранное";
+}
+
+<h1 class="dh-section" style="margin-top:2rem">Избранное</h1>
+
+@if (Model.Count == 0)
+{
+    <!-- Пустое состояние: подсказываем, что делать -->
+    <div class="dh-step">
+        Здесь пока пусто. Откройте <a asp-controller="Catalog" asp-action="Index">каталог</a> и добавьте понравившиеся автомобили.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="dh-card">
+                    @if (!string.IsNullOrEmpty(car.PhotoPath))
+                    {
+                        <img src="@car.PhotoPath" alt="@car.Model!.Brand!.Name @car.Model.Name" class="dh-photo-img" />
+                    }
+                    else
+                    {
+                        <div class="dh-photo">Фото</div>
+                    }
+                    <div class="dh-card-body">
+                        <h5 class="mb-1">@car.Model!.Brand!.Name @car.Model.Name</h5>
+                        <div class="dh-specs mb-3">@car.ManufactureYear · @car.Transmission</div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="dh-price">@car.Price.ToString("N0") ₽</span>
+                            <a asp-controller="Catalog" asp-action="Details" asp-route-id="@car.CarId" class="btn btn-primary btn-sm">Подробнее</a>
+                        </div>
+                        <!-- Убрать из избранного: возвращаемся на эту же страницу -->
+                        <form asp-action="Toggle" method="post" class="mt-3">
+                            <input type="hidden" name="carId" value="@car.CarId" />
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                            <button class="btn btn-link p-0" type="submit">Убрать из избранного</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
