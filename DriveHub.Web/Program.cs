@@ -22,6 +22,7 @@ builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<IDealFacade, DealFacade>();
 builder.Services.AddScoped<FavoritesService>();
+builder.Services.AddScoped<RequestService>();
 
 // ÀÓÒÅÍÒÈÔÈÊÀÖÈß: âõîä ÷åğåç cookie
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
