@@ -26,9 +26,10 @@
             {
                 <!-- Время нужно только для тест-драйва; салон работает с 9:00 до 20:00 -->
                 <div class="mb-3">
-                    <label class="form-label">Время (с 9:00 до 20:00)</label>
-                    <input type="time" name="TestDriveTime" class="form-control" min="09:00" max="20:00" step="900"
+                    <label class="form-label">Время начала (с 9:00 до 19:00)</label>
+                    <input type="time" name="TestDriveTime" class="form-control" min="09:00" max="19:00" step="1800"
                            value="@(Model.TestDriveTime?.ToString(@"hh\:mm"))" />
+                    <div class="form-text">Тест-драйв длится 1 час.</div>
                     <span asp-validation-for="TestDriveTime" class="text-danger"></span>
                 </div>
             }
