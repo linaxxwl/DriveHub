@@ -1,0 +1,65 @@
+﻿@using DriveHub.Web.ViewModels
+@using DriveHub.Web.Domain.Enums
+@model List<DriveHub.Web.Domain.Entities.Request>
+@{
+    ViewData["Title"] = "Мои заявки";
+}
+
+<h1 class="dh-section" style="margin-top:2rem">Мои заявки</h1>
+
+<!-- Сообщение после действия (отправлено, отменено) -->
+@if (TempData["Message"] is string message)
+{
+    <div class="alert alert-info">@message</div>
+}
+
+@if (Model.Count == 0)
+{
+    <div class="dh-step">
+        Заявок пока нет. Выберите автомобиль в <a asp-controller="Catalog" asp-action="Index">каталоге</a> и оставьте заявку.
+    </div>
+}
+else
+{
+    <div class="dh-step">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr><th>Автомобиль</th><th>Тип</th><th>Дата</th><th>Статус</th><th>Комментарий менеджера</th><th></th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Catalog" asp-action="Details" asp-route-id="@r.CarId">
+                                    @r.Car!.Model!.Brand!.Name @r.Car.Model.Name
+                                </a>
+                            </td>
+                            <td>@r.Type.ToRu()</td>
+                            <td>
+                                @r.DesiredDate.ToString("dd.MM.yyyy")
+                                @if (r.TestDriveTime != null)
+                                {
+                                    <span>, @r.TestDriveTime.Value.ToString(@"hh\:mm")</span>
+                                }
+                            </td>
+                            <td><span class="dh-badge">@r.Status.ToRu()</span></td>
+                            <td>@(string.IsNullOrEmpty(r.ManagerComment) ? "—" : r.ManagerComment)</td>
+                            <td class="text-end">
+                                @* Отменить можно только активную заявку *@
+                                @if (r.Status is RequestStatus.New or RequestStatus.InProgress or RequestStatus.Approved)
+                                {
+                                    <form asp-action="Cancel" asp-route-id="@r.RequestId" method="post"
+                                          onsubmit="return confirm('Отменить заявку?');">
+                                        <button class="btn btn-link p-0" type="submit">Отменить</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
