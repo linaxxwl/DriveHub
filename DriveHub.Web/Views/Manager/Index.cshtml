@@ -1,0 +1,103 @@
+﻿@using DriveHub.Web.ViewModels
+@using DriveHub.Web.Domain.Enums
+@model ManagerQueueViewModel
+@{
+    ViewData["Title"] = "Заявки";
+}
+
+<h1 class="dh-section" style="margin-top:2rem">Заявки</h1>
+
+<!-- Сообщение после действия -->
+@if (TempData["Message"] is string message)
+{
+    <div class="alert alert-info">@message</div>
+}
+
+<!-- Фильтр по статусу: без выбора показывается очередь (новые и в обработке) -->
+<ul class="nav nav-pills mb-3">
+    <li class="nav-item">
+        <a class="nav-link @(Model.Status == null ? "active" : "")" asp-action="Index">Очередь</a>
+    </li>
+    @foreach (var s in new[] { RequestStatus.Approved, RequestStatus.Rejected, RequestStatus.Cancelled, RequestStatus.Closed })
+    {
+        <li class="nav-item">
+            <a class="nav-link @(Model.Status == s ? "active" : "")" asp-action="Index" asp-route-status="@s">@s.ToRu()</a>
+        </li>
+    }
+</ul>
+
+@if (Model.Requests.Count == 0)
+{
+    <div class="dh-step">Заявок нет.</div>
+}
+else
+{
+    <div class="dh-step">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Клиент</th>
+                        <th>Автомобиль</th>
+                        <th>Тип</th>
+                        <th>Дата</th>
+                        <th>Комментарий клиента</th>
+                        <th>Статус</th>
+                        <th>Менеджер</th>
+                        <th style="min-width:240px">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Requests)
+                    {
+                        <tr>
+                            <td>@r.RequestId</td>
+                            <td>@r.Client!.FullName<br /><small class="text-muted">@r.Client.Phone</small></td>
+                            <td>
+                                <a asp-controller="Catalog" asp-action="Details" asp-route-id="@r.CarId">
+                                    @r.Car!.Model!.Brand!.Name @r.Car.Model.Name
+                                </a>
+                            </td>
+                            <td>@r.Type.ToRu()</td>
+                            <td>
+                                @r.DesiredDate.ToString("dd.MM.yyyy")
+                                @if (r.TestDriveTime != null)
+                                {
+                                    <span>, @r.TestDriveTime.Value.ToString(@"hh\:mm")</span>
+                                }
+                            </td>
+                            <td>@(string.IsNullOrEmpty(r.ClientComment) ? "—" : r.ClientComment)</td>
+                            <td><span class="dh-badge">@r.Status.ToRu()</span></td>
+                            <td>@(r.Manager?.FullName ?? "—")</td>
+                            <td>
+                                @if (r.Status == RequestStatus.New)
+                                {
+                                    <form asp-action="TakeInWork" asp-route-id="@r.RequestId" method="post">
+                                        <button class="btn btn-sm btn-outline-primary" type="submit">Взять в работу</button>
+                                    </form>
+                                }
+                                else if (r.Status == RequestStatus.InProgress)
+                                {
+                                    <form asp-action="Approve" asp-route-id="@r.RequestId" method="post" class="mb-2"
+                                          onsubmit="return confirm('Одобрить заявку?@(r.Type == RequestType.Purchase ? " Автомобиль будет зарезервирован, остальные заявки на него отклонятся." : "")');">
+                                        <button class="btn btn-sm btn-success" type="submit">Одобрить</button>
+                                    </form>
+                                    <form asp-action="Reject" asp-route-id="@r.RequestId" method="post" class="d-flex gap-2">
+                                        <input name="comment" class="form-control form-control-sm" maxlength="300"
+                                               placeholder="Причина отклонения" required />
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Отклонить</button>
+                                    </form>
+                                }
+                                else if (!string.IsNullOrEmpty(r.ManagerComment))
+                                {
+                                    <small class="text-muted">@r.ManagerComment</small>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
