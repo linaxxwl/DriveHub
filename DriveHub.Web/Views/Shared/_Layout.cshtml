@@ -26,6 +26,11 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Catalog" asp-action="Index">Каталог</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">О проекте</a></li>
 
+                        @if (User.IsInRole("Менеджер") || User.IsInRole("Администратор"))
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-controller="Manager" asp-action="Index">Заявки</a></li>
+                        }
+
                         @if (User.IsInRole("Клиент"))
                         {
                             <li class="nav-item"><a class="nav-link" asp-controller="Favorites" asp-action="Index">Избранное</a></li>
